@@ -314,3 +314,46 @@ Notice in our `environment` section that we’re specifying ELASTICSEARCH_HOSTS=
 
 Let's load up Kibana and see if we can access it.
 
+Consigne 
+Monitoré avec lockstash les connexion ssh sur elk et faire remonté dans kibana
+
+# Installation FileBeat (déja installer pour nous)
+
+### Configuration FileBeat
+
+Le fichier de configuration de Filebeat se retrouve dans /etc/filebeat/filebeat.yml
+
+``` output.elasticsearch:
+  hosts: ["localhost:9200"]
+  username: "" #(si pas de login/mot de passe ne rien mettre)
+  password: "" #(si pas de login/mot de passe ne rien mettre)
+
+...
+
+setup.kibana:
+  host: "localhost:5601"
+
+...
+
+# Optionnelle
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+  reload.period: 15s
+```
+### Pour initialiser le service à chaque démarrage de la machine, lancez la commande suivante:
+
+`` sudo systemctl enable filebeat ``
+
+type :filestream
+
+fichier /etc/filebeat/filebeat.yml : 
+
+rajouter dans docker compose (de logtach) que on attend de logstach de faire quelque chose (on doit le surcharger)
+
+copie template dans host 
+Appliquer en interface graphique template sur web.lab.local
+
+https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/app/ssh_service/template_app_ssh_service.yaml?at=release%2F6.2
+
+
